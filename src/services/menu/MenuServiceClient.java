@@ -5,9 +5,9 @@ import entities.*;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuServiceClientService extends MenuService {
+public class MenuServiceClient extends MenuService {
 
-    public MenuServiceClientService(Menu menu) {
+    public MenuServiceClient(Menu menu) {
         super(menu);
     }
 

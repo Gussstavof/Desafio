@@ -2,11 +2,9 @@ package services.menu;
 
 import entities.*;
 
-import java.util.List;
+public class MenuServiceAdmin extends MenuService {
 
-public class MenuServiceAdminService extends MenuService {
-
-    public MenuServiceAdminService(Menu menu) {
+    public MenuServiceAdmin(Menu menu) {
         super(menu);
     }
 

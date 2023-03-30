@@ -1,15 +1,15 @@
 package services.options;
 
 import entities.*;
-import services.menu.MenuServiceCompanyService;
+import services.menu.MenuServiceCompany;
 
 import java.util.Scanner;
 
 public class CompanyOptions implements MenuOptions {
 
-    private MenuServiceCompanyService menuCompanyService;
+    private MenuServiceCompany menuCompanyService;
 
-    public CompanyOptions(MenuServiceCompanyService menuCompanyService) {
+    public CompanyOptions(MenuServiceCompany menuCompanyService) {
         this.menuCompanyService = menuCompanyService;
     }
 

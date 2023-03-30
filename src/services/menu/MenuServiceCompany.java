@@ -2,9 +2,9 @@ package services.menu;
 
 import entities.*;
 
-public class MenuServiceCompanyService extends MenuService {
+public class MenuServiceCompany extends MenuService {
 
-    public MenuServiceCompanyService(Menu menu) {
+    public MenuServiceCompany(Menu menu) {
         super(menu);
     }
 

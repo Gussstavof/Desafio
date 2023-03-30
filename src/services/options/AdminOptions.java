@@ -1,15 +1,15 @@
 package services.options;
 
 import entities.*;
-import services.menu.MenuServiceAdminService;
+import services.menu.MenuServiceAdmin;
 
 import java.util.Scanner;
 
 public class AdminOptions implements MenuOptions {
 
-    private final MenuServiceAdminService menuAdminService;
+    private final MenuServiceAdmin menuAdminService;
 
-    public AdminOptions(MenuServiceAdminService menuAdminService) {
+    public AdminOptions(MenuServiceAdmin menuAdminService) {
         this.menuAdminService = menuAdminService;
     }
 
