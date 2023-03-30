@@ -1,8 +1,5 @@
 import entities.*;
 import services.*;
-import services.menu.MenuAdminService;
-import services.menu.MenuClientService;
-import services.menu.MenuCompanyService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +50,6 @@ public class Main {
         Client client = new Client("07221134049", "Allan da Silva", "client", 20);
         Client client2 = new Client("72840700050", "Samuel da Silva", "client2", 24);
 
-
         User user2 = new User("company", "1234", null, company, null);
         User user3 = new User("client", "1234", client, null, null);
         User user4 = new User("client2", "1234", client2, null, null);
@@ -73,105 +69,35 @@ public class Main {
         executar(users, clients, companies, products, sales);
     }
 
-	public static void executar(List<User> users, List<Client> clients, List<Company> companies,
-								List<Product> products, List<Sale> sales) {
+    public static void executar(List<User> users, List<Client> clients, List<Company> companies,
+                                List<Product> products, List<Sale> sales) {
 
-		Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-		System.out.println("Entre com seu usuário e senha:");
-		System.out.print("Usuário: ");
-		String username = sc.next();
-		System.out.print("Senha: ");
-		String password = sc.next();
+        System.out.println("Entre com seu usuário e senha:");
+        System.out.print("Usuário: ");
+        String username = sc.next();
+        System.out.print("Senha: ");
+        String password = sc.next();
 
-		LoginService loginService = new LoginService();
+        LoginService loginService = new LoginService();
 
-		try {
-			User userLogged = loginService.login(users, username, password);
+        try {
+            User userLogged = loginService.login(users, username, password);
 
-			MenuAdminService menuAdminService  = new MenuAdminService(companies, clients);
+            OptionsService
+                    .showOptions(
+                            new Menu(companies, clients, products, userLogged, sales)
+                    )
+                    .forEach(
+                            menuOption -> menuOption.options(userLogged, sc)
+                    );
 
-			MenuCompanyService menuCompanyService = new MenuCompanyService(userLogged);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
 
-			MenuClientService menuClientService = new MenuClientService(companies, products, clients, userLogged, sales);
-
-			System.out.println("Escolha uma opção para iniciar");
-			if (userLogged.IsEmpresa()) {
-				System.out.println("1 - Listar vendas");
-				System.out.println("2 - Ver produtos");
-				System.out.println("0 - Deslogar");
-				Integer escolha = sc.nextInt();
-
-				switch (escolha) {
-					case 1: {
-						menuCompanyService.salesMade(sales);
-
-						executar(users, clients, companies, products, sales);
-					}
-					case 2: {
-						menuCompanyService.showProducts();
-
-						executar(users, clients, companies, products, sales);
-					}
-					case 0: {
-						executar(users, clients, companies, products, sales);
-
-					}
-				}
-
-			} else if (userLogged.IsAdmin()) {
-				System.out.println("1 - Listar Empresas");
-				System.out.println("2 - Listar Usuarios");
-				System.out.println("0 - Deslogar");
-
-				int escolha = sc.nextInt();
-				switch (escolha) {
-					case 1: {
-
-						menuAdminService.companyList();
-
-						executar(users, clients, companies, products, sales);
-					}
-					case 2: {
-						menuAdminService.clientList();
-					}
-					case 0: {
-						executar(users, clients, companies, products, sales);
-
-					}
-
-				}
-			} else {
-				System.out.println("1 - Relizar Compras");
-				System.out.println("2 - Ver Compras");
-				System.out.println("0 - Deslogar");
-
-				int escolha = sc.nextInt();
-				switch (escolha) {
-					case 1: {
-
-						menuClientService.chooseCompany(escolha,companies);
-						menuClientService.chooseProduct(sc);
-
-						executar(users, clients, companies, products, sales);
-					}
-					case 2: {
-						menuClientService.purchase();
-						executar(users, clients, companies, products, sales);
-					}
-					case 0: {
-						executar(users, clients, companies, products, sales);
-
-					}
-
-				}
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-
-		}
-		finally {
-			executar(users, clients, companies, products, sales);
-		}
-	}
+        } finally {
+            executar(users, clients, companies, products, sales);
+        }
+    }
 }

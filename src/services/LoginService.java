@@ -11,20 +11,22 @@ public class LoginService {
                 .filter(x -> x.getUsername().equals(username))
                 .toList();
 
-        if (userSearches.size() > 0) {
+        if (userSearches.size() == 0) {
 
-            return checkSenha(userSearches, password);
+            throw new Exception("Usuário não encontrado");
         }
 
-        throw new Exception("Usuário não encontrado");
+        return checkPassword(userSearches, password);
     }
 
-    private User checkSenha(List<User> userSearches, String password) throws Exception {
+    private User checkPassword(List<User> userSearches, String password) throws Exception {
         User user = userSearches.get(0);
-        if (user.getPassword().equals(password)) {
-            return user;
+        if (!user.getPassword().equals(password)) {
+
+            throw new Exception("Senha incorreta");
         }
-        throw new Exception("Senha incorreta");
+
+        return user;
     }
 
 }

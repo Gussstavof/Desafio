@@ -1,24 +1,19 @@
 package services.menu;
 
 import entities.*;
-import services.menu.MenuAbstract;
 
-import java.util.List;
+public class MenuServiceCompanyService extends MenuService {
 
-public class MenuCompanyService extends MenuAbstract {
-    private User user;
-
-    public MenuCompanyService(User user) {
-        super();
-        this.user = user;
+    public MenuServiceCompanyService(Menu menu) {
+        super(menu);
     }
 
-    public void salesMade(List<Sale> sales){
+    public void salesMade(){
         System.out.println();
         System.out.println("************************************************************");
         System.out.println("VENDAS EFETUADAS");
         sales.forEach(sale -> {
-            if (sale.getEmpresa().getId().equals(user.getCompany().getId())) {
+            if (sale.getEmpresa().getId().equals(userLogged.getCompany().getId())) {
                 System.out.println("************************************************************");
                 System.out.println("entities.Sale de código: " + sale.getId() + " no CPF "
                         + sale.getCliente().getCpf() + ": ");
@@ -30,7 +25,7 @@ public class MenuCompanyService extends MenuAbstract {
                 System.out.println("Total Líquido  para empresa"
                         + (sale.getPrice() - sale.getCommissionSystem()));
                 System.out.println("************************************************************");
-                System.out.println("Saldo entities.Company: " + user.getCompany().getBalance());
+                System.out.println("Saldo entities.Company: " + userLogged.getCompany().getBalance());
                 System.out.println("************************************************************");
             }
         });
@@ -38,10 +33,10 @@ public class MenuCompanyService extends MenuAbstract {
 
     public void showProducts(){
 
-        company = user.getCompany();
+        Company company = userLogged.getCompany();
 
         company.getProducts().forEach(product -> {
-            if (company.getId().equals(user.getCompany().getId())) {
+            if (company.getId().equals(userLogged.getCompany().getId())) {
                 System.out.println();
                 System.out.println("************************************************************");
                 System.out.println("MEUS PRODUTOS");
@@ -51,7 +46,7 @@ public class MenuCompanyService extends MenuAbstract {
                 System.out.println("Quantidade em estoque: " + product.getQuantity());
                 System.out.println("Valor: R$" + product.getPrice());
                 System.out.println("************************************************************");
-                System.out.println("Saldo entities.Company: " + user.getCompany().getBalance());
+                System.out.println("Saldo entities.Company: " + userLogged.getCompany().getBalance());
                 System.out.println("************************************************************");
             }
         });
